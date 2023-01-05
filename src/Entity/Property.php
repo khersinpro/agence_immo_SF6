@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\AsciiSlugger as Slugger;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
 class Property
@@ -65,6 +66,7 @@ class Property
     public function __construct()
     {
         $this->options = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -156,6 +158,11 @@ class Property
         return $this;
     }
 
+    public function getFormatedPrice(): string
+    {
+        return number_format($this->price, 0 , '', ' ');
+    }
+
     public function getHeat(): ?PropertyHeat
     {
         return $this->heat;
@@ -166,6 +173,11 @@ class Property
         $this->heat = $heat;
 
         return $this;
+    }
+
+    public function getHeatCategory(): string
+    {
+        return $this->heat->getName();
     }
 
     public function getCity(): ?string
@@ -262,5 +274,11 @@ class Property
         $this->options->removeElement($option);
 
         return $this;
+    }
+
+    public function getSlug()
+    {
+        $slug = (new Slugger())->slug($this->title);
+        return mb_strtolower($slug);
     }
 }
