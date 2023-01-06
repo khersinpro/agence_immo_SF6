@@ -1,4 +1,9 @@
 <div class="card mb-4">
+    {% if property.thumb %}
+        <img src="{{ asset(property.thumb)|imagine_filter('my_thumb') }}" class="card-img-top" style='height: 163px; width: 100%' alt="">
+    {% else %}
+        <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
+    {% endif %}
     <div class="card-body">
         <h5 class="card-title">
             <a href="{{ path('property.show', { id: property.id, slug: property.slug}) }}">{{ property.title }}</a>

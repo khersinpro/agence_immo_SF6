@@ -13,6 +13,11 @@
     {% for property in properties %}
         <div class="col-3">
             <div class="card">
+                {% if property.thumb %}
+                    <img src="{{ property.thumb }}" class="card-img-top" style='height: 163px; width: 100%' alt="">
+                {% else %}
+                    <img src="{{ asset('/images/properties/default_property_image.jpg') }}" class="card-img-top" alt="">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">{{ property.title }}</a>

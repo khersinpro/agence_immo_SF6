@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function PHPUnit\Framework\isType;
+
 class AdminPropertyController extends AbstractController
 {
 
@@ -66,17 +68,18 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin/property/{id<\d+>}", name="admin.property.edit", methods="GET|POST")
      */
-    public function edit(Property $property, Request $request, FileUploader $fileUp): Response
+    public function edit(Property $property, Request $request, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fileToUpload = $form->get('image')->getData() ?? null;
 
-            if ($form->getExtraData()) {
-                // $fileUp->uploadPropertyImage()
-                dd($form->getExtraData());
+            if ($fileToUpload && $fileToUpload instanceof UploadedFile) {
+                $property->setThumb($fileUploader->uploadImage($fileToUpload));
             }
+            
             $this->manager->flush();
             $this->addFlash('success', 'Le bien a été modifier avec succès.');
             return $this->redirectToRoute('admin.property.index');

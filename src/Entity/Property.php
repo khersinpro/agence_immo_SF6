@@ -63,6 +63,9 @@ class Property
     #[ORM\ManyToMany(targetEntity: PropertyOptions::class, inversedBy: 'properties')]
     private Collection $options;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumb = null;
+
     public function __construct()
     {
         $this->options = new ArrayCollection();
@@ -280,5 +283,17 @@ class Property
     {
         $slug = (new Slugger())->slug($this->title);
         return mb_strtolower($slug);
+    }
+
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(?string $thumb): self
+    {
+        $this->thumb = $thumb;
+
+        return $this;
     }
 }

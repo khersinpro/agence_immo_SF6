@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Option;
 use App\Entity\Property;
+use App\Entity\PropertyHeat;
+use App\Entity\PropertyOptions;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,9 +27,12 @@ class PropertyType extends AbstractType
         ->add('bedrooms')
         ->add('floor')
         ->add('price')
-        // ->add('heat', ChoiceType::class, [
-        //     'choices' => $this->getChoices()
-        // ])
+        ->add('heat', EntityType::class, [
+            'class' => PropertyHeat::class,
+            'choice_label' => 'name',
+            'multiple' => false,
+            'required' => true
+        ])
         ->add('image', FileType::class, [
             'required' => false,
             'mapped' => false,
@@ -44,7 +49,7 @@ class PropertyType extends AbstractType
             ]
         ])
         ->add('options', EntityType::class, [
-            'class' => Option::class,
+            'class' => PropertyOptions::class,
             'choice_label' => 'name',
             'multiple' => true,
             'required' => false,
@@ -60,18 +65,7 @@ class PropertyType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Property::class,
-            // 'allow_extra_fields' => true,
             'translation_domain' => 'forms'
         ]);
     }
-
-    // private function getChoices()
-    // {
-    //     $choices = Property::HEAT;
-    //     $output = [];
-    //     foreach ($choices as $key => $value) {
-    //         $output[$value] = $key;
-    //     }
-    //     return $output;
-    // }
 }
