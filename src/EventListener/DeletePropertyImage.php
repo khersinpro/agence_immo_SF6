@@ -40,7 +40,7 @@ class DeletePropertyImage
     
     public function preUpdate(PreUpdateEventArgs $args)
     {
-        if ($args->hasChangedField('thumb') && pathinfo($args->getOldValue('thumb'))) {
+        if ($args->hasChangedField('thumb') && $args->getOldValue('thumb')) {
             $filename = pathinfo($args->getOldValue('thumb'), PATHINFO_BASENAME);
             $this->fs->remove($this->propertyImageDirectory."/".$filename);
             $this->fs->remove($this->propertyCacheThumb.$filename);
