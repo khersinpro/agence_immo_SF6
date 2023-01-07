@@ -92,7 +92,7 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id<\d+>}", name="admin.property.delete", methods="DELETE")
+     * @Route("/admin/property/delete/{id<\d+>}", name="admin.property.delete", methods="DELETE")
      */
     public function delete(Property $property, Request $request): Response
     {

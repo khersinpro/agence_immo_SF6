@@ -6,6 +6,7 @@
 parameters:
     property.image.directory: '%kernel.project_dir%/public/images/properties'
     property.image.public.path: '/images/properties'
+    property.cache.thumb: '%kernel.project_dir%/public/media/cache/my_thumb/images/properties/'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -24,3 +25,11 @@ services:
         arguments: 
             $propertyImageDirectory: '%property.image.directory%'
             $propertyImagePublicPath: '%property.image.public.path%'
+    App\EventListener\DeletePropertyImage:
+        arguments: 
+            $propertyImageDirectory: '%property.image.directory%'
+            # $propertyImagePublicPath: '%property.image.public.path%'
+            $propertyCacheThumb: '%property.cache.thumb%'
+        tags: 
+            - {name: 'doctrine.event_listener', event: 'preUpdate', entity: 'App\Entity\Property'}        
+            - {name: 'doctrine.event_listener', event: 'preRemove', entity: 'App\Entity\Property'}        
