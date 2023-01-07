@@ -12,6 +12,7 @@ class FileUploader
     private $propertyImagePublicPath;
     private $slugger;
 
+
     public function __construct($propertyImageDirectory, $propertyImagePublicPath, SluggerInterface $slugger )
     {
         $this->propertyImageDirectory = $propertyImageDirectory;
