@@ -13,14 +13,14 @@ class DeletePropertyImage
     private $fs;
     private $propertyImageDirectory;
     private $cacheManager;
-    private $propertyCacheThumb;
+    private $propertyImagePublicPath;
 
-    public function __construct($propertyImageDirectory, CacheManager $cacheManager, $propertyCacheThumb)
+    public function __construct($propertyImageDirectory, CacheManager $cacheManager, $propertyImagePublicPath)
     {
         $this->fs = new Filesystem();
         $this->propertyImageDirectory = $propertyImageDirectory;
         $this->cacheManager = $cacheManager;
-        $this->propertyCacheThumb = $propertyCacheThumb;
+        $this->propertyImagePublicPath = $propertyImagePublicPath;
     }
 
     // Delete Thumbnail and native image after deleting property
@@ -33,8 +33,12 @@ class DeletePropertyImage
 
         if ($property->getThumb()) {
             $filename = pathinfo($property->getThumb(), PATHINFO_BASENAME);
+
             $this->fs->remove($this->propertyImageDirectory."/".$filename);
-            $this->fs->remove($this->propertyCacheThumb.$filename);
+            $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
+                'my_thumb', 
+                'medium'
+            ]);
         }
     }
     
@@ -42,9 +46,12 @@ class DeletePropertyImage
     {
         if ($args->hasChangedField('thumb') && $args->getOldValue('thumb')) {
             $filename = pathinfo($args->getOldValue('thumb'), PATHINFO_BASENAME);
+
             $this->fs->remove($this->propertyImageDirectory."/".$filename);
-            $this->fs->remove($this->propertyCacheThumb.$filename);
+            $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
+                'my_thumb', 
+                'medium'
+            ]);
         }
-        // dump($args->hasChangedField('thumb'), $args->getOldValue('thumb'), $args->getNewValue('thumb'));
     }
 }

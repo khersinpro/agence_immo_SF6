@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactMail;
 use App\Entity\Property;
 use App\Entity\PropertySearch;
+use App\Form\ContactMailType;
 use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
+use App\Service\MailManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +25,7 @@ class PropertyController extends AbstractController
     {
         $this->propertyRepository = $propertyRepository;
     }
+    
     /**
      * @Route("/biens", name="property.index")
      */
@@ -48,7 +52,7 @@ class PropertyController extends AbstractController
     /**
      * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
      */
-    public function show($slug, $id, Property $property): Response
+    public function show($slug, $id, Property $property, Request $request, MailManager $mailManager): Response
     {
         if ($slug !== $property->getSlug()) {
             return $this->redirectToRoute('property.show', [
@@ -56,9 +60,20 @@ class PropertyController extends AbstractController
                 'id' => $id
             ], 301);
         }
+
+        $contact = new ContactMail();
+        $contact->setProperty($property);
+        $form = $this->createForm(ContactMailType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mailManager->sendPropertyEmailContact($contact);
+        }
+
         return $this->render('property/show.html.twig', [
             'current_menu' => 'properties',
-            'property' => $property
+            'property' => $property,
+            'form' => $form
         ]);
     }
 }
