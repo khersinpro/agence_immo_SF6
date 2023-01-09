@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>{{ contact.firstname }}</h1>
-</body>
-</html>
+{% apply inline_css(source('@css/email.css')) %} 
+    <table class="full-width-container">
+        <tr class="header">
+            <td>Nouvelle demande de contact client !</td>
+        </tr>
+        <tr>
+            <td class="separator"></td>
+        </tr>
+        <tr>
+            <td>
+                Le client suivant souhaite prendre contact pour avoir plus d'informations sur la propriété suivante :
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="info-table">
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Utilisateur</th>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Téléphone</th>
+                        <th>email</th>
+                        <th>message</th>
+                        <th>lien vers la propriété</th>
+                    </tr>
+                    <tr>
+                        <td>{{ contact.firstname }}</td>
+                        <td>{{ contact.lastname }}</td>
+                        <td>{{ contact.phone }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.message }}</td>
+                        <td>fdhhhgfhdgfdhgf</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endapply %}

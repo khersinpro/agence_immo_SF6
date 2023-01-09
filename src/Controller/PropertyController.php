@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class PropertyController extends AbstractController
 {
 
@@ -68,6 +67,13 @@ class PropertyController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $mailManager->sendPropertyEmailContact($contact);
+            $this->addFlash('success', 'Votre mail de contact a bien été transmis.');
+            $this->redirectToRoute('property.show', [
+                'slug' => $slug,
+                'id' => $id
+            ]);
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', 'Le formulaire contiens des erreurs, veuillez les corriger.');
         }
 
         return $this->render('property/show.html.twig', [
