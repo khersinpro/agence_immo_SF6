@@ -1,41 +1,103 @@
 {% apply inline_css(source('@css/email.css')) %} 
-    <table class="full-width-container">
-        <tr class="header">
-            <td>Nouvelle demande de contact client !</td>
-        </tr>
-        <tr>
-            <td class="separator"></td>
-        </tr>
-        <tr>
-            <td>
-                Le client suivant souhaite prendre contact pour avoir plus d'informations sur la propriété suivante :
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table class="info-table">
+<head>
+    <title>Renseignement - {{ contact.property.title }}</title>
+</head>
+<table class="full-width-container" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="separator"></td>
+    </tr>
+    <tr class="header font-style">
+        <td class="title">Mon agence</td>
+    </tr>
+    <tr>
+        <td class="separator"></td>
+    </tr>
+    <tr>
+        <td >
+            <table class="info-table">
+                <tbody>
                     <tr>
-                        <th>Catégorie</th>
-                        <th>Utilisateur</th>
+                        <td class="medium-separator"></td>
                     </tr>
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Téléphone</th>
-                        <th>email</th>
-                        <th>message</th>
-                        <th>lien vers la propriété</th>
+                        <td class="category-header info-title font-style" align="center">
+                            Demande d'information client
+                        </td>
                     </tr>
                     <tr>
-                        <td>{{ contact.firstname }}</td>
-                        <td>{{ contact.lastname }}</td>
-                        <td>{{ contact.phone }}</td>
-                        <td>{{ contact.email }}</td>
-                        <td>{{ contact.message }}</td>
-                        <td>fdhhhgfhdgfdhgf</td>
+                        <td class="little-separator"></td>
                     </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                    <tr>
+                        <td>
+                            <table class="border-table">
+                                <tbody>
+                                    <tr>
+                                        <th class="font-style category-header text-color-lighter-dark">
+                                            MESSAGE DU CLIENT
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-style client-message text">
+                                            {{ contact.message }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="category-header font-style text-color-lighter-dark" align="center" style="font-weight: bold;">
+                            INFORMATION CLIENT :
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" cellpadding="0" cellspacing="0" class="border-table" >
+                                <tr>
+                                    <td class="category-header td-container font-style text">Nom</td>
+                                    <td class="category-header td-container font-style text"> {{ contact.lastname }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-header td-container font-style text">Prénom</td>
+                                    <td class="category-header td-container font-style text">{{ contact.firstname }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-header td-container font-style text">Téléphone</td>
+                                    <td class="category-header td-container font-style text">{{ contact.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-header td-container font-style text">email</td>
+                                    <td class="category-header td-container font-style text">{{ contact.email }}</td>
+                                </tr>
+                            </table>
+                            <tr>
+                                <td class="medium-separator"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-style text-color-lighter-dark" style="text-align:center; font-weight:bold;">
+                                    LIEN VERS LA PROPIÉTÉ
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="little-separator"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center; font-weight:bold;">
+                                    <a class="font-style" href="{{ url('property.show', { id: contact.property.id, slug: contact.property.slug})}}">Nom de la maison</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="separator"></td>
+                            </tr>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="bottom"></td>
+    </tr>
+</table>
+
 {% endapply %}

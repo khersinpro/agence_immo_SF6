@@ -82,4 +82,10 @@ class PropertyController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route("/testemail", name: "test")]
+    public function testEmail()
+    {
+        return $this->render('email/property_contact/property_contact.html.twig');
+    }
 }
