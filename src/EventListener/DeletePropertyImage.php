@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\Property;
+use App\Entity\PropertyPicture;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
@@ -24,34 +25,37 @@ class DeletePropertyImage
     }
 
     // Delete Thumbnail and native image after deleting property
-    public function preRemove(LifecycleEventArgs $args)
+    public function postRemove(LifecycleEventArgs $args)
     {
         /**
-         * @var Property
+         * @var PropertyPicture
          */
         $property = $args->getObject();
 
-        if ($property->getThumb()) {
-            $filename = pathinfo($property->getThumb(), PATHINFO_BASENAME);
-
-            $this->fs->remove($this->propertyImageDirectory."/".$filename);
-            $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
-                'my_thumb', 
-                'medium'
-            ]);
+        if (!$property instanceof PropertyPicture) {
+           return;
         }
+
+        $filename = pathinfo($property->getPicture(), PATHINFO_BASENAME);
+        $this->fs->remove($this->propertyImageDirectory."/".$filename);
+        $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
+            'my_thumb', 
+            'medium'
+        ]);
     }
+
     
-    public function preUpdate(PreUpdateEventArgs $args)
-    {
-        if ($args->hasChangedField('thumb') && $args->getOldValue('thumb')) {
-            $filename = pathinfo($args->getOldValue('thumb'), PATHINFO_BASENAME);
+    // public function preUpdate(PreUpdateEventArgs $args)
+    // {
+    //     dd("aarrivé");
+    //     if ($args->hasChangedField('thumb') && $args->getOldValue('thumb')) {
+    //         $filename = pathinfo($args->getOldValue('thumb'), PATHINFO_BASENAME);
 
-            $this->fs->remove($this->propertyImageDirectory."/".$filename);
-            $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
-                'my_thumb', 
-                'medium'
-            ]);
-        }
-    }
+    //         $this->fs->remove($this->propertyImageDirectory."/".$filename);
+    //         $this->cacheManager->remove($this->propertyImagePublicPath.'/'.$filename, [
+    //             'my_thumb', 
+    //             'medium'
+    //         ]);
+    //     }
+    // }
 }

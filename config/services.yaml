@@ -29,5 +29,6 @@ services:
             $propertyImageDirectory: '%property.image.directory%'
             $propertyImagePublicPath: '%property.image.public.path%'
         tags: 
-            - {name: 'doctrine.event_listener', event: 'preUpdate', entity: 'App\Entity\Property'}        
-            - {name: 'doctrine.event_listener', event: 'preRemove', entity: 'App\Entity\Property'}        
+            # - {name: 'doctrine.event_listener', event: 'preUpdate', entity: 'App\Entity\Property'}        
+            - {name: 'doctrine.event_listener', event: 'postRemove', entity: 'App\Entity\Property'}        
+            # - {name: 'doctrine.event_listener', event: 'postPersist', entity: 'App\Entity\Property'}        

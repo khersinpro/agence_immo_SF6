@@ -20,18 +20,21 @@ class FileUploader
         $this->slugger = $slugger;
     }
 
-    public function uploadImage(UploadedFile $file): string
+    public function uploadImage(array $files): array
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $this->propertyImagePublicPath.'/'.$safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
-        try {
-            $file->move($this->propertyImageDirectory, $fileName);
-        } catch (FileException $e) {
-            throw new FileException("L'image n'a pas été enregistré", 1);
+        $allFileNames = [];
+        foreach ($files as $file) {
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $this->slugger->slug($originalFilename);
+            $fileName = $this->propertyImagePublicPath.'/'.$safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+            array_push($allFileNames, $fileName);
+            try {
+                $file->move($this->propertyImageDirectory, $fileName);
+            } catch (FileException $e) {
+                throw new FileException("L'image n'a pas été enregistré", 1);
+            }
         }
 
-        return $fileName;
+        return $allFileNames;
     }
 }

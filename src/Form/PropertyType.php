@@ -33,19 +33,11 @@ class PropertyType extends AbstractType
             'multiple' => false,
             'required' => true
         ])
-        ->add('image', FileType::class, [
+        ->add('picturesArray', FileType::class, [
             'required' => false,
-            'mapped' => false,
+            'multiple' => true,
             'attr' => [
                 'class' => 'form-control',
-            ], 
-            'constraints' => [
-                new Image([
-                    'mimeTypes' => ['image/png','image/jpeg', 'image/webp'],
-                    'mimeTypesMessage' => 'Seul les images au format PNG, JPG et WEBP sont accépté.',
-                    'maxSize' => '2M',
-                    'maxSizeMessage' => 'Le fichier {{ name }} est trop volumineux.'
-                ])
             ]
         ])
         ->add('options', EntityType::class, [

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Property;
+use App\Entity\PropertyPicture;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use App\Service\FileUploader;
@@ -47,14 +48,30 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin/property/create", name="admin.property.new")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->propertyRepository->add($property, true);
+            $filesToUpload = $property->getPicturesArray() ?? null;
+            
+            if ($filesToUpload) {
+                // Upload images and return array of filename
+                $allFilenames = $fileUploader->uploadImage($filesToUpload);
+                $property->setThumb($allFilenames[0]);
+
+                foreach($allFilenames as $filename) {
+                    $propertyPicture = new PropertyPicture();
+                    $propertyPicture->setPicture($filename);
+
+                    $property->addPropertyPicture($propertyPicture);
+                    $this->manager->persist($propertyPicture);
+                }
+            }
+            
+            $this->propertyRepository->save($property, true);
             $this->addFlash('success', 'Bien créer avec succès.');
             return $this->redirectToRoute('admin.property.index');
         }
@@ -74,10 +91,20 @@ class AdminPropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fileToUpload = $form->get('image')->getData() ?? null;
+            $filesToUpload = $property->getPicturesArray() ?? null;
+            
+            if ($filesToUpload) {
+                // Upload images and return array of filename
+                $allFilenames = $fileUploader->uploadImage($filesToUpload);
+                $property->setThumb($allFilenames[0]);
 
-            if ($fileToUpload && $fileToUpload instanceof UploadedFile) {
-                $property->setThumb($fileUploader->uploadImage($fileToUpload));
+                foreach($allFilenames as $filename) {
+                    $propertyPicture = new PropertyPicture();
+                    $propertyPicture->setPicture($filename);
+
+                    $property->addPropertyPicture($propertyPicture);
+                    $this->manager->persist($propertyPicture);
+                }
             }
             
             $this->manager->flush();

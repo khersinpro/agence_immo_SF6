@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Faker\Provider\Image;
 use Symfony\Component\String\Slugger\AsciiSlugger as Slugger;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
 class Property
@@ -66,10 +69,24 @@ class Property
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumb = null;
 
+    #[ORM\OneToMany(mappedBy: 'property', targetEntity: PropertyPicture::class, orphanRemoval: true)]
+    private Collection $propertyPictures;
+
+    #[Assert\All([
+        new Assert\Image([
+            'mimeTypes' => ['image/png','image/jpeg', 'image/webp'],
+            'mimeTypesMessage' => 'Seul les images au format PNG, JPG et WEBP sont accépté.',
+            'maxSize' => '2M',
+            'maxSizeMessage' => 'Le fichier {{ name }} est trop volumineux.'
+        ])
+    ])]
+    private $picturesArray;
+
     public function __construct()
     {
         $this->options = new ArrayCollection();
         $this->created_at = new \DateTimeImmutable();
+        $this->propertyPictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -296,4 +313,55 @@ class Property
 
         return $this;
     }
+
+    public function getPicturesArray()
+    {
+        return $this->picturesArray;
+    }
+
+    public function setPicturesArray($picturesArray): self
+    {
+        $this->picturesArray = $picturesArray;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PropertyPicture>
+     */
+    public function getPropertyPictures(): Collection
+    {
+        return $this->propertyPictures;
+    }
+
+    public function getPropertyPicture(): ?PropertyPicture
+    {
+        if ($this->getPropertyPictures()->isEmpty()) {
+            return null;
+        }
+        return $this->propertyPictures[0];
+    }
+
+    public function addPropertyPicture(PropertyPicture $propertyPicture): self
+    {
+        if (!$this->propertyPictures->contains($propertyPicture)) {
+            $this->propertyPictures->add($propertyPicture);
+            $propertyPicture->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertyPicture(PropertyPicture $propertyPicture): self
+    {
+        if ($this->propertyPictures->removeElement($propertyPicture)) {
+            // set the owning side to null (unless already changed)
+            if ($propertyPicture->getProperty() === $this) {
+                $propertyPicture->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
