@@ -5,32 +5,30 @@ require('select2');
 
 $('select').select2();
 
-// const deleteMethod = ($path, $csrfToken) => {
-//     return fet
-// };
+const deletePictureMethod = (path, data, element) => {
+    fetch(path, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+        data.success ? element.closest('.form-img-box').remove() : alert('une erreur est survenue, veuillez réessayer plus tard.')
+    })
+    .catch(err => {
+        console.log("error");
+    })
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(document.querySelectorAll('.delete-button'));
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', e => {
             e.preventDefault();
-            console.log(button);
             const csrfToken = button.getAttribute("csrftoken");
             const path = button.getAttribute("href");
-            csrfToken && path && fetch(path, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body : JSON.stringify({ '_token': csrfToken })
-                })
-            .then(res => {
-
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            
+            csrfToken && path && deletePictureMethod(path, { '_token': csrfToken }, button);     
         })
     })
 })

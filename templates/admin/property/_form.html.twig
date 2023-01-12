@@ -19,7 +19,7 @@
     </div>
     <div class="row my-4">
         {% for picture in property.propertyPictures %}
-            <div class="col-md-auto d-flex flex-column">
+            <div class="col-md-auto d-flex flex-column form-img-box">
                 <img src="{{ picture.picture|imagine_filter('my_thumb') }}" alt="" class='mr-5' style="width: 120px">
                 <a href="{{ path('admin.picture.delete', {id: picture.id}) }}" csrftoken="{{ csrf_token('delete' ~ picture.id) }}" class="delete-button btn btn-danger btn-sm mt-1">Supprimer</a>
             </div> 

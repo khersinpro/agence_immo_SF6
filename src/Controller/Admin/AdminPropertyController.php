@@ -60,7 +60,8 @@ class AdminPropertyController extends AbstractController
             if ($filesToUpload) {
                 // Upload images and return array of filename
                 $allFilenames = $fileUploader->uploadImage($filesToUpload);
-                $property->setThumb($allFilenames[0]);
+                // Todo => set une image de thumb differente lié a la property qui ne dépend pas de PropertyPictureEntity
+                // $property->setThumb($allFilenames[0]);
 
                 foreach($allFilenames as $filename) {
                     $propertyPicture = new PropertyPicture();
