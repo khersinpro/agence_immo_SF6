@@ -3,3 +3,16 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    prefix: '%url_dev%'
+homepage:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'home'
+    permanent: true
+redirectLog:
+  path: /login
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'login'
+    permanent: true

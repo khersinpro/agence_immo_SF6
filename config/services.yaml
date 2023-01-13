@@ -6,6 +6,7 @@
 parameters:
     property.image.directory: '%kernel.project_dir%/public/images/properties'
     property.image.public.path: '/images/properties'
+    url_dev: '%env(URL_PREFIX)%'
 services:
     # default configuration for services in *this* file
     _defaults:

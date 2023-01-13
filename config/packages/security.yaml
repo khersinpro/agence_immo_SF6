@@ -17,10 +17,10 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                check_path: /login
+                check_path: '%url_dev%/login'
             logout:
-                path: /logout
-                target: /
+                path: '%url_dev%/logout'
+                target: '%url_dev%/'
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -31,7 +31,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: '^%url_dev%/admin', roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

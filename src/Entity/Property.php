@@ -82,6 +82,13 @@ class Property
     ])]
     private $picturesArray;
 
+    // Scale est le nombre de chiffre aprés la virgule, precision est le nombre total de chiffre
+    #[ORM\Column(type: 'float', scale: 4, precision: 6)]
+    private ?float $lat = null;
+
+    #[ORM\Column(type: 'float', scale: 4, precision: 7)]
+    private ?float $lng = null;
+
     public function __construct()
     {
         $this->options = new ArrayCollection();
@@ -360,6 +367,30 @@ class Property
                 $propertyPicture->setProperty(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
 
         return $this;
     }
