@@ -21,6 +21,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('admin_autocomplete', './assets/admin_autocomplete.js')
+    .addEntry('user_search_autocomplete', './assets/user_search_autocomplete.js')
 
     
 

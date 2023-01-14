@@ -23,11 +23,20 @@ class PropertySearch
      */
     private $options;
 
+    #[Assert\Length(min: 0, max: 50)]
+    private $city;
+
+    #[Assert\Range(min: 0, max: 200)]
+    private $distance;
+
+    private $lng;
+
+    private $lat;
+
     /**
      * @param int|null $maxPrice
      * @return PropertySearch
      */
-
     public function __construct()
     {
         $this->options = new ArrayCollection();
@@ -79,5 +88,45 @@ class PropertySearch
     public function getOptions(): ArrayCollection
     {
         return $this->options;
+    }
+
+    public function setCity($city): void
+    {   
+        $this->city = $city;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setDistance($distance): void
+    {   
+        $this->distance = $distance;
+    }
+
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    public function setLng($lng): void
+    {   
+        $this->lng = $lng;
+    }
+
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    public function setLat($lat): void
+    {   
+        $this->lat = $lat;
+    }
+
+    public function getLat()
+    {
+        return $this->lat;
     }
 }

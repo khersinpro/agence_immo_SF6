@@ -7,16 +7,19 @@
     <div class="container">
     {{ form_start(form) }}
     <div class="row align-items-end">
-        <div class="col">
+        <div class="col-md-2">
             {{ form_row(form.minSurface)}}
         </div>
-        <div class="col">
+        <div class="col-md-2">
             {{ form_row(form.maxPrice)}}
         </div>
-        <div class="col">
+        <div class="col-md-3">
             {{ form_row(form.options)}}
         </div>
-        <div class="col">
+        <div class="col-md-3">
+            <input type="text">
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
                 <button class="btn btn-primary" type='submit'>Rechercher</button>
             </div>
@@ -39,4 +42,10 @@
         {{ knp_pagination_render(properties) }}
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('user_search_autocomplete') }}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&callback=initAutocomplete&libraries=places&v=weekly"defer ></script>
+    {{ parent() }}
 {% endblock %}

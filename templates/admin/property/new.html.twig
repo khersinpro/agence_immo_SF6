@@ -15,10 +15,9 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ encore_entry_script_tags('admin_autocomplete') }}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&callback=initAutocomplete&libraries=places&v=weekly"defer ></script>
     {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        $('select').select2();
-    </script>
 {% endblock %}
 
