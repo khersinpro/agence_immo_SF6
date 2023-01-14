@@ -98,5 +98,16 @@
                 </ul>
             </div>
         </div>
+        <style>
+            #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+            }
+        </style>
+        <div id="map" data-lng="{{property.lng}}" data-lat="{{property.lat}}"></div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('show_ property_location') }}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&callback=initMap&v=weekly"></script>
 {% endblock %}
