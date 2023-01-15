@@ -33,18 +33,12 @@ class PropertyController extends AbstractController
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
-        dump($search->getOptions());
 
         $properties =  $paginator->paginate(
             $this->propertyRepository->findAllVisibleQuery($search),
             $request->query->getInt('page', 1),
             12
         );
-
-
-        // foreach($properties as $prop) {
-        //     dump($prop->getPropertyPictures()[1] ?? null);
-        // }
 
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties',
