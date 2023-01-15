@@ -1,6 +1,6 @@
 <div class="card mb-4">
-    {% if property.propertyPicture %}
-        <img src="{{ asset(property.propertyPicture.picture)|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
+    {% if property.propertypicture %}
+        <img src="{{ asset(property.propertypicture.picture)|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
     {% else %}
         <img src="{{ asset('images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
     {% endif %}

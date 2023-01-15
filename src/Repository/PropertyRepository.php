@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Property;
+use App\Entity\PropertyPicture;
 use App\Entity\PropertySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -86,8 +87,46 @@ class PropertyRepository extends ServiceEntityRepository
 
     private function queryBase(): QueryBuilder
     {
+        //     $expr = $this->getEntityManager()->createQueryBuilder();
+
+        // $queryTest = $this->createQueryBuilder('p');
+        // ->select('p', 'img')
+        // ->leftJoin('p.propertyPictures', 'img', 'WITH', 'p.id = img.property LIMIT 1 OFFSET 0')
+        // ->select('p')
+        // ->addSelect('(SELECT i.picture
+        //     FROM App\Entity\PropertyPicture i
+        //     WHERE i.property = u.id
+        //     LIMIT 1) as propertyimage')
+        // ->where('p.sold = false');
+        // $queryTest->andwhere(
+        //     $expr->expr()->in(
+        //         'p.id',
+        //         $this->createQueryBuilder('p2')
+        //             ->select('MIN(p2.id)')
+        //             ->where('p2.property IN p.id')
+        //             ->getDQL()
+        //     )
+        // )
+        // $queryTest->where($expr->expr()->in(
+        //     'p.id',
+        //     $this->createQueryBuilder()
+        //     $expr->setMaxResults(1)
+        // ))
+        // $queryTest->select('p', 'img')
+        // ->leftJoin('p.propertyPictures', 'img')
+        // ->where(
+        //     $queryText->
+        // )
+        // ->where('p.sold = false');
+
+        // ;
+
+        // return $queryTest;
+
         return $this->createQueryBuilder('p')
-            ->where('p.sold = false');
+        ->select('p', 'img')
+        ->leftJoin('p.propertyPictures', 'img')
+        ->where('p.sold = false');
     }
 //    /**
 //     * @return Property[] Returns an array of Property objects

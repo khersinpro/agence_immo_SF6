@@ -41,6 +41,11 @@ class PropertyController extends AbstractController
             12
         );
 
+
+        // foreach($properties as $prop) {
+        //     dump($prop->getPropertyPictures()[1] ?? null);
+        // }
+
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties',
             'properties' => $properties,
