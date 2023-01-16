@@ -1,0 +1,10 @@
+# Fichier de configuration pour le RecaptchaSubmitType 
+# Pour permettre YamlFileLoader du fichier RecaptchaExtension de mettre a disposition
+# Les arguments passé a ce fichier dans RecaptchaSubmitType 
+services:
+  recaptcha.type:
+    class: MyBundle\RecaptchaBundle\Type\RecaptchaSubmitType
+    tags: ['form.type']
+    arguments: 
+      $key: '%recaptcha.key%'
+      $secret: '%recaptcha.secret%'

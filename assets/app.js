@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             csrfToken && path && deletePictureMethod(path, { '_token': csrfToken }, button);     
         })
     })
+    document.getElementById('contact').click();
 })
 
 

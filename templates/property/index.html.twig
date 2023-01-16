@@ -44,8 +44,7 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('user_search_autocomplete') }}
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&libraries=places"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&callback=initAutocomplete&libraries=places&v=weekly"defer ></script>
     {{ parent() }}
+    {{ encore_entry_script_tags('user_search_autocomplete') }}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEJKOOlBwYUuW5kMSnFsJZUtAbGVsJ6tc&callback=initAutocomplete&libraries=places&v=weekly"defer ></script>
 {% endblock %}

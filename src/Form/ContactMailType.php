@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ContactMail;
+use MyBundle\RecaptchaBundle\Type\RecaptchaSubmitType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,6 +20,9 @@ class ContactMailType extends AbstractType
             ->add('phone', TextType::class)
             ->add('email', TextType::class)
             ->add('message', TextareaType::class)
+            ->add('captcha', RecaptchaSubmitType::class,[
+                'label' => 'Envoyer'
+            ])
         ;
     }
 
