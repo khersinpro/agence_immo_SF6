@@ -3,11 +3,21 @@
 {# Déclarer le bloc avec le nom défini dans le blockPrefix du RecaptchaSubmitType.php #}
 {# suivi du '_widget' #}
 {% block recaptcha_submit_widget %}
+    {# Ajout du controle du captcha de google #}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script>
+       function submitGoogleCaptcha(token) {
+            console.log("elem.closest('form')");
+            let elem = document.getElementById('{{ id }}');
+            elem.closest('form').submit();
+       }
+     </script>
+
     {# declaration du submit widget pour que l'apparence sois un type submit #}
     {# pour que cela fonctionne, il faut ajouter le chemin vers ce fichier dans twig #}
     {% block submit_widget %}
         {% set label = button %}
-        {% set attr = attr | merge({class: 'g-recaptcha btn btn-primary', 'data_sitekey': key, 'data-callback': ''})  %}
+        {% set attr = attr | merge({class: (attr.class|default('')) ~ ' g-recaptcha', 'data-sitekey': key, 'data-callback': 'submitGoogleCaptcha'})  %}
         {{ block('button_widget') }}
     {% endblock %}
 

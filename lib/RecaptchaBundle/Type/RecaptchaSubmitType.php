@@ -2,6 +2,7 @@
 
 namespace MyBundle\RecaptchaBundle\Type;
 
+use MyBundle\RecaptchaBundle\Constraints\Recaptcha;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormView;
@@ -26,7 +27,8 @@ class RecaptchaSubmitType extends AbstractType
     {
         // Definition de mapped a false pour qu'il ne sois pas relié a l'entité du formulaire
         $resolver->setDefaults([
-            'mapped' => false
+            'mapped' => false,
+            'constraints' => new Recaptcha()
         ]);
     }
 

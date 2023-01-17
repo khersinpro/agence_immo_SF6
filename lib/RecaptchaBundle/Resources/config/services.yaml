@@ -8,3 +8,17 @@ services:
     arguments: 
       $key: '%recaptcha.key%'
       $secret: '%recaptcha.secret%'
+  recaptcha.validator:
+    class: MyBundle\RecaptchaBundle\Constraints\RecaptchaValidator
+    tags: ['validator.constraint_validator']
+    autowire: true
+  # Declaration du namespace du recaptcha google pour l'autowire du recaptcha.validator 
+  ReCaptcha\ReCaptcha: 
+    class: ReCaptcha\ReCaptcha
+    # Passage des argument pour l'initialisation de la classe
+    arguments:
+      $secret: '%recaptcha.secret%'
+      $requestMethod: '@recaptcha.curl'
+  # Recupération de la methode curlpost pour l'initialisation du recatcha google 
+  recaptcha.curl:
+    class: ReCaptcha\RequestMethod\CurlPost
