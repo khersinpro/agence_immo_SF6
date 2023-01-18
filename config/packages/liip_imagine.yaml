@@ -12,4 +12,9 @@ liip_imagine :
             quality : 75
             filters :
                 thumbnail  : { size : [800, 530], mode : outbound }
+        home_card :
+            quality : 75
+            filters :
+                thumbnail  : { size : [640, 427], mode : outbound }
+
 

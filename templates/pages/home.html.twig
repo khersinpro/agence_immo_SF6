@@ -3,31 +3,129 @@
 {% block title %}Mon agence lorem{% endblock %}
 
 {% block body %}
-<div class="jumbotron text-center my-4">
-    <h1>Mon agence lorem</h1>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio voluptas facere quos id laudantium aspernatur quo atque veniam temporibus alias inventore neque, eum adipisci maiores fugit perspiciatis iusto. Illo, laudantium?</p>
-</div>
-<div class="container">
-    <h2>Les derniers biens</h2>
-    <div class="row flex">
-    {% for property in properties %}
-        <div class="col-3">
-            <div class="card">
-                {% if property.propertyPicture %}
-                    <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
-                {% else %}
-                    <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">{{ property.title }}</a>
-                    </h5>
-                    <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                    <div class="text-primary" style='font-weight: bold; font-size: 1.5rem;'>{{ property.formatedPrice }} €</div>
+<main>
+    <section class="hero my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <div>
+                        <h1 class="fw-bold mb-4" >Vous êtes a la recherche d'un bien immobilier d'exeption ?</h1>
+                        <p class="mb-4" >L'agence immobiliere Homey propose les meilleurs biens du marché sur toute la France !</p>
+                        <a href="{{path('property.index')}}" class="btn btn-primary fw-bold">Voir tous nos biens</a>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <img class="img-fluid rounded" src="{{asset('images/static_assets/hero/hero1.jpg')}}" alt="">
+                </div>
+            </div>
+            <div class="row border-top border-bottom border-secondary-subtle my-5 text-center">
+                <div class="col-md-3 d-flex  align-items-center flex-column py-4">
+                    <i class="fa-solid fa-city text-primary fs-2 mb-3"></i>
+                    <h2 class="fs-6 fw-semibold">Plus de 1800 biens en vente dans toute la France</h2> 
+                </div>
+                <div class="col-md-3 border-start border-end border-secondary-subtle d-flex  align-items-center flex-column py-4">
+                    <i class="fa-solid fa-map-location-dot text-secondary fs-2 mb-3"></i>
+                    <h2 class="fs-6 fw-semibold">16 agences repartie dans toutes la France</h2>
+                </div>
+                <div class="col-md-3 border-end border-secondary-subtle d-flex  align-items-center flex-column py-4">
+                    <i class="fa-solid fa-trophy text-success text-warning fs-2 mb-3"></i>
+                    <h2 class="fs-6 fw-semibold">Meilleur agence immobiliere de France 2022</h2>
+                </div>
+                <div class="col-md-3 d-flex  align-items-center flex-column py-4">
+                    <i class="fa-solid fa-user-tie text-success fs-2 mb-3"></i>
+                    <h2 class="fs-6 fw-semibold">Un accompagnement complet pour votre projet</h2>
                 </div>
             </div>
         </div>
-    {% endfor %}
-    </div>
-</div>
+    </section>
+    <section class="follow bg-light py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">
+                Un accompagnement sur mesure pour vous permetre de trouver le bien qui vous convient le mieux !
+            </h2>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col my-3">
+                    <div class="card h-100">
+                        <img src="{{ asset('images/static_assets/following/agent.jpg')|imagine_filter('home_card') }}" class="card-img-top" alt="...">
+                        <div class="card-body pb-4">
+                            <h3 class="card-title fs-5 fw-bold">Visite de biens d'exeption</h3>
+                            <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut fugiat saepe totam similique eius corrupti vitae consequatur itaque id magni.</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col my-3">
+                        <div class="card h-100">
+                        <img src="{{ asset('images/static_assets/following/paper.jpg')|imagine_filter('home_card') }}" class="card-img-top" alt="...">
+                        <div class="card-body pb-4">
+                            <h3 class="card-title fs-5 fw-bold">Gestion de dossier</h3>
+                            <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut fugiat saepe totam similique eius corrupti vitae consequatur itaque id magni.</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col my-3">
+                        <div class="card h-100">
+                        <img src="{{ asset('images/static_assets/following/key-hand.jpg')|imagine_filter('home_card') }}" class="card-img-top" alt="...">
+                        <div class="card-body pb-4">
+                            <h3 class="card-title fs-5 fw-bold">Suivi & accompagnement</h3>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam possimus, ipsum ducimus consequatur consectetur dolores?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="last-properties">
+        <div class="container">
+            <h2 class="my-5 fs-2 fw-bold">
+                Nos derniers biens en agence
+            </h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-3">
+            {% for property in properties|slice(1,4) %}
+                    <div class="col mb-3">
+                            <div class="card h-100">
+                                {% if property.propertyPicture %}
+                                    <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
+                                {% else %}
+                                    <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
+                                {% endif %}
+                                <div class="card-body pb-4 d-flex justify-content-between flex-column">
+                                    <h3 class="card-title fs-5 fw-bold">
+                                        {{ property.title }}
+                                    </h3>
+                                    <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
+                                    <div class="fw-bold fs-5 mt-auto" style='font-weight: bold; font-size: 1.5rem;'>{{ property.formatedPrice }} €</div>
+                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">Voir le bien</a>
+                                </div>
+                            </div>
+                    </div>
+            {% endfor %}
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+            {% for property in properties|slice(4,8) %}
+                    <div class="col mb-3">
+                            <div class="card h-100">
+                                {% if property.propertyPicture %}
+                                    <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
+                                {% else %}
+                                    <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
+                                {% endif %}
+                                <div class="card-body pb-4 d-flex justify-content-between flex-column">
+                                    <h3 class="card-title fs-5 fw-bold">
+                                        {{ property.title }}
+                                    </h3>
+                                    <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
+                                    <div class="fw-bold fs-5 mt-auto">{{ property.formatedPrice }} €</div>
+                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">Voir le bien</a>
+                                </div>
+                            </div>
+                    </div>
+            {% endfor %}
+            </div>
+            <div class="container py-4 text-center">
+                <a href="{{ path('property.index') }}" class="btn btn-primary">Voir tout nos biens</a>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

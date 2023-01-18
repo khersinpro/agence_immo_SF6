@@ -1,2 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+// navbar
+header {
+    height: 66px;
+}
+.navbar {
+    background: #ffffff;
+    box-shadow: 0 10px 10px -10px rgb(33 35 38 / 10%);
+}
