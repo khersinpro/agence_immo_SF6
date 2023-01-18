@@ -94,8 +94,11 @@
                                         {{ property.title }}
                                     </h3>
                                     <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                                    <div class="fw-bold fs-5 mt-auto" style='font-weight: bold; font-size: 1.5rem;'>{{ property.formatedPrice }} €</div>
-                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">Voir le bien</a>
+                                    <div class="fw-bold fs-5 mt-auto text-primary" style='font-weight: bold; font-size: 1.5rem;'>{{ property.formatedPrice }} €</div>
+                                    <a class="btn btn-light border btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">
+                                        Voir le bien
+                                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
+                                    </a>
                                 </div>
                             </div>
                     </div>
@@ -115,15 +118,18 @@
                                         {{ property.title }}
                                     </h3>
                                     <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                                    <div class="fw-bold fs-5 mt-auto">{{ property.formatedPrice }} €</div>
-                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">Voir le bien</a>
+                                    <div class="fw-bold fs-5 mt-auto text-primary">{{ property.formatedPrice }} €</div>
+                                    <a class="btn btn-light border btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">
+                                        Voir le bien
+                                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
+                                    </a>
                                 </div>
                             </div>
                     </div>
             {% endfor %}
             </div>
             <div class="container py-4 text-center">
-                <a href="{{ path('property.index') }}" class="btn btn-primary">Voir tout nos biens</a>
+                <a href="{{ path('property.index') }}" class="btn btn-outline-primary fw-bold">Voir tout nos biens</a>
             </div>
         </div>
     </section>
