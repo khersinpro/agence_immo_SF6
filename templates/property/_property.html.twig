@@ -1,16 +1,30 @@
-<div class="card mb-4">
-    {% if property.propertypicture %}
-        <img src="{{ asset(property.propertypicture.picture)|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
-    {% else %}
-        <img src="{{ asset('images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
-    {% endif %}
-    <div class="card-body">
-        <h5 class="card-title">
-            <a href="{{ path('property.show', { id: property.id, slug: property.slug}) }}">{{ property.title }}</a>
-        </h5>
-        <p class="card-text">{{ property.surface }}m² - {{ property.city }} ({{ property.postalCode }})</p>
-        <div class="text-primary" style='font-weight: bold; font-size: 1.5rem;'>
-            {{ property.formatedPrice }} €
+<a class="col mb-3" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">
+    <div class="card h-100">
+        {% if property.propertyPicture %}
+            <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
+        {% else %}
+            <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
+        {% endif %}
+        <div class="card-body pb-4 d-flex justify-content-between flex-column">
+            <div class="card-title fs-5 fw-bold d-flex justify-content-between">
+                <p class="text-semi-dark">Maison</p>
+                <p class="fw-bold fs-5 mt-auto text-primary">{{ property.formatedPrice }} €</p>
+            </div>
+            <p class="text-semi-dark fw-bold">{{ property.city }} ({{ property.postalCode }})</p>
+            <p class="text-semi-dark fw-bold fs-small">Informations sur le bien</p>
+            <div class="d-flex flex-wrap ">
+                <p class="py-1 px-2 rounded fs-small text-white bg-primary me-2">Surface: {{ property.surface }}m²</p>
+                <p class="py-1 px-2 rounded fs-small text-white bg-secondary me-2">Pièces: {{ property.rooms }}</p>
+                <p class="py-1 px-2 rounded fs-small text-white bg-success me-2">Chambres: {{ property.bedrooms }}</p>
+            </div>
+            {% if property.options %}
+            <p class="text-semi-dark fw-bold fs-small">Options du bien</p>
+            <div class="d-flex flex-wrap ">
+                {% for option in property.options %}
+                    <p class="py-1 px-2 rounded fs-small text-white {{ loop.index is divisible by 2 ? 'bg-secondary' : 'bg-primary'  }} me-2">{{ option.name }}</p>
+                {% endfor %}                
+            </div>
+            {% endif %}
         </div>
     </div>
-</div>
+</a>

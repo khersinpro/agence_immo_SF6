@@ -3,7 +3,7 @@ require('bootstrap');
 const $ = require('jquery');
 require('select2');
 
-$('select').select2();
+$('#options').select2();
 
 const deletePictureMethod = (path, data, element) => {
     fetch(path, {

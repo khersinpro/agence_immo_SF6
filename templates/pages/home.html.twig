@@ -81,52 +81,14 @@
                 Nos derniers biens en agence
             </h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-3">
-            {% for property in properties|slice(1,4) %}
-                    <div class="col mb-3">
-                            <div class="card h-100">
-                                {% if property.propertyPicture %}
-                                    <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
-                                {% else %}
-                                    <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
-                                {% endif %}
-                                <div class="card-body pb-4 d-flex justify-content-between flex-column">
-                                    <h3 class="card-title fs-5 fw-bold">
-                                        {{ property.title }}
-                                    </h3>
-                                    <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                                    <div class="fw-bold fs-5 mt-auto text-primary" style='font-weight: bold; font-size: 1.5rem;'>{{ property.formatedPrice }} €</div>
-                                    <a class="btn btn-light border btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">
-                                        Voir le bien
-                                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                    </div>
-            {% endfor %}
+                {% for property in properties|slice(1,4) %}
+                    {% include "property/_property.html.twig" %}
+                {% endfor %}
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-            {% for property in properties|slice(4,8) %}
-                    <div class="col mb-3">
-                            <div class="card h-100">
-                                {% if property.propertyPicture %}
-                                    <img src="{{ asset(property.propertyPicture.picture )|imagine_filter('my_thumb') }}" class="card-img-top"  alt="">
-                                {% else %}
-                                    <img src="{{ asset('/images/properties/default_property_image.jpg')|imagine_filter('my_thumb') }}" class="card-img-top" alt="">
-                                {% endif %}
-                                <div class="card-body pb-4 d-flex justify-content-between flex-column">
-                                    <h3 class="card-title fs-5 fw-bold">
-                                        {{ property.title }}
-                                    </h3>
-                                    <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
-                                    <div class="fw-bold fs-5 mt-auto text-primary">{{ property.formatedPrice }} €</div>
-                                    <a class="btn btn-light border btn-sm mt-2" href="{{ path('property.show', { id: property.id, slug: property.getSlug}) }}">
-                                        Voir le bien
-                                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
-                                    </a>
-                                </div>
-                            </div>
-                    </div>
-            {% endfor %}
+                {% for property in properties|slice(4,8) %}
+                    {% include "property/_property.html.twig" %}
+                {% endfor %}
             </div>
             <div class="container py-4 text-center">
                 <a href="{{ path('property.index') }}" class="btn btn-outline-primary fw-bold">Voir tout nos biens</a>
