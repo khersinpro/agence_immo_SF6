@@ -89,6 +89,10 @@ class Property
     #[ORM\Column(type: 'float', scale: 4, precision: 7)]
     private ?float $lng = null;
 
+    #[ORM\ManyToOne(inversedBy: 'properties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PropertyType $propertyType = null;
+
     public function __construct()
     {
         $this->options = new ArrayCollection();
@@ -391,6 +395,18 @@ class Property
     public function setLng(float $lng): self
     {
         $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getPropertyType(): ?PropertyType
+    {
+        return $this->propertyType;
+    }
+
+    public function setPropertyType(?PropertyType $propertyType): self
+    {
+        $this->propertyType = $propertyType;
 
         return $this;
     }

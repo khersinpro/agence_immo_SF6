@@ -2,19 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Option;
 use App\Entity\Property;
 use App\Entity\PropertyHeat;
 use App\Entity\PropertyOptions;
+use App\Entity\PropertyType as TypeOfProperty;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
 
 class PropertyType extends AbstractType
 {
@@ -46,6 +43,12 @@ class PropertyType extends AbstractType
             'choice_label' => 'name',
             'multiple' => true,
             'required' => false,
+        ])
+        ->add('propertyType', EntityType::class, [
+            'class' => TypeOfProperty::class,
+            'choice_label' => 'name',
+            'multiple' => false,
+            'required' => true
         ])
         ->add('city')
         ->add('address')

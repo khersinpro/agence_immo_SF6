@@ -3,7 +3,7 @@
 {% block title %}Gérer les biens{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+    <div class="container mt-4 flex-fill">
         <h1>Gérer les biens</h1>
 
         {% for message in app.flashes('success') %}
@@ -37,5 +37,11 @@
         <div class="text-end">
             <a class='btn btn-primary' href="{{ path('admin.property.new') }}">Créer un nouveau bien</a>
         </div>
+    </div>
+    <div class="container">
+        {# display navigation #}
+        <div class="navigation d-flex justify-content-center mt-5">
+            {{ knp_pagination_render(properties) }}
+        </div>  
     </div>
 {% endblock %}

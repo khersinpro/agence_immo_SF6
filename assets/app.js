@@ -33,4 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-
+// admin navbar
+window.addEventListener('load', () => {
+    document.getElementById('admin-nav-toggler').addEventListener('click', () => {
+        document.getElementById('admin-navbar').classList.toggle('toggle');
+    })
+})

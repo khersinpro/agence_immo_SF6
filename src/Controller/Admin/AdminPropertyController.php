@@ -4,12 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Property;
 use App\Entity\PropertyPicture;
+use App\Entity\PropertySearch;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,9 +39,16 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin", name="admin.property.index")
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new PropertySearch();
+
         $properties = $this->propertyRepository->findAll();
+        $properties =  $paginator->paginate(
+            $this->propertyRepository->findAllVisibleQuery($search),
+            $request->query->getInt('page', 1),
+            15
+        );
 
         return $this->render('admin/property/index.html.twig',compact('properties'));
     }
