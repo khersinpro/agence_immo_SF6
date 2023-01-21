@@ -17,7 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PropertyController extends AbstractController
 {
-
     private $propertyRepository;
 
     public function __construct(PropertyRepository $propertyRepository)
@@ -25,9 +24,7 @@ class PropertyController extends AbstractController
         $this->propertyRepository = $propertyRepository;
     }
     
-    /**
-     * @Route("/biens", name="property.index")
-     */
+    #[Route("/biens", name: "property.index")]
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $search = new PropertySearch();
@@ -47,9 +44,7 @@ class PropertyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
-     */
+    #[Route("/biens/{slug}-{id}", name: "property.show", requirements: ["slug" => "[a-z0-9\-]*"])]
     public function show($slug, $id, Property $property, Request $request, MailManager $mailManager): Response
     {
         if ($slug !== $property->getSlug()) {

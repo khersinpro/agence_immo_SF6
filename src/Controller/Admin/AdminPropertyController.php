@@ -36,9 +36,7 @@ class AdminPropertyController extends AbstractController
         $this->manager = $manager;
     }
 
-    /**
-     * @Route("/admin", name="admin.property.index")
-     */
+    #[Route("/admin", name: "admin.property.index", methods: "GET")]
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $search = new PropertySearch();
@@ -53,9 +51,7 @@ class AdminPropertyController extends AbstractController
         return $this->render('admin/property/index.html.twig',compact('properties'));
     }
 
-    /**
-     * @Route("/admin/property/create", name="admin.property.new")
-     */
+    #[Route("/admin/property/create", name: "admin.property.new", methods: ["GET", "POST"])]
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $property = new Property();
@@ -68,8 +64,6 @@ class AdminPropertyController extends AbstractController
             if ($filesToUpload) {
                 // Upload images and return array of filename
                 $allFilenames = $fileUploader->uploadImage($filesToUpload);
-                // Todo => set une image de thumb differente lié a la property qui ne dépend pas de PropertyPictureEntity
-                // $property->setThumb($allFilenames[0]);
 
                 foreach($allFilenames as $filename) {
                     $propertyPicture = new PropertyPicture();
@@ -91,9 +85,7 @@ class AdminPropertyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/property/{id<\d+>}", name="admin.property.edit", methods="GET|POST")
-     */
+    #[Route("/admin/property/{id<\d+>}", name: "admin.property.edit", methods: ["GET", "POST"])]
     public function edit(Property $property, Request $request, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(PropertyType::class, $property);
@@ -127,9 +119,7 @@ class AdminPropertyController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/property/delete/{id<\d+>}", name="admin.property.delete", methods="DELETE")
-     */
+    #[Route("/admin/property/delete/{id<\d+>}", name: "admin.property.delete", methods: "DELETE")]
     public function delete(Property $property, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->request->get('_token'))) {

@@ -12,9 +12,7 @@ class HomeController extends AbstractController
 {
 
 
-    /**
-     * @Route("/", name="home")
-     */
+    #[Route("/", name: "home")]
     public function index(PropertyRepository $repository): Response
     {
         $properties = $repository->findLatest();
