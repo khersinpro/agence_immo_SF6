@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             {% block title %}Admin dashboard{% endblock %}
         </title>
@@ -13,9 +14,16 @@
     </head>
     <body>
         {% include "admin/admin_layout/navbar.html.twig" %}
-        {% block body %}
-            
-        {% endblock %}
+        <div class="container-fluid flex-fill d-flex">
+            <div class="row flex-fill">
+                {% include "admin/admin_layout/sidebar.html.twig" %}
+                <main class="col-md-9 ms-sm-auto col-lg-10 p-3">
+                {% block body %}
+
+                {% endblock %}
+                </div>
+            </div>
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
