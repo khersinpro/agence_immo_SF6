@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PropertyOptions;
-use App\Form\OptionType;
+use App\Form\PropertyOptionsType;
 use App\Repository\PropertyOptionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,11 +31,11 @@ class AdminOptionController extends AbstractController
     public function new(Request $request, PropertyOptionsRepository $optionRepository): Response
     {
         $option = new PropertyOptions();
-        $form = $this->createForm(OptionType::class, $option);
+        $form = $this->createForm(PropertyOptionsType::class, $option);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $optionRepository->add($option);
+            $optionRepository->save($option, true);
             return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -50,11 +50,11 @@ class AdminOptionController extends AbstractController
      */
     public function edit(Request $request,PropertyOptions $option, PropertyOptionsRepository $optionRepository): Response
     {
-        $form = $this->createForm(OptionType::class, $option);
+        $form = $this->createForm(PropertyOptionsType::class, $option);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $optionRepository->add($option);
+            $optionRepository->save($option, true);
             return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,12 +65,12 @@ class AdminOptionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin.option.delete", methods={"POST"})
+     * @Route("/{id}", name="admin.option.delete", methods={"DELETE"})
      */
     public function delete(Request $request,PropertyOptions $option, PropertyOptionsRepository $optionRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$option->getId(), $request->request->get('_token'))) {
-            $optionRepository->remove($option);
+            $optionRepository->remove($option, true);
         }
 
         return $this->redirectToRoute('admin.option.index', [], Response::HTTP_SEE_OTHER);

@@ -14,10 +14,10 @@
             </h2>
             <div id="collapse-1" class="accordionNav--item__collapse collapse" aria-labelledby="accordion-1" data-bs-parent="#admin-navbar">
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Ajouter</a>
+                    <a href="{{ path('admin.property.new') }}" class="d-block w-100 py-2 ps-4">Ajouter</a>
                 </div>
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Gerer</a>
+                    <a href="{{ path('admin.property.index') }}" class="d-block w-100 py-2 ps-4">Gerer</a>
                 </div>
             </div>
         </div>
@@ -34,10 +34,10 @@
             </h2>
             <div id="collapse-2" class="accordionNav--item__collapse collapse" aria-labelledby="accordion-2" data-bs-parent="#admin-navbar">
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Ajouter</a>
+                    <a href="{{ path('admin.option.new') }}" class="d-block w-100 py-2 ps-4">Ajouter</a>
                 </div>
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Gerer</a>
+                    <a href="{{ path('admin.option.index') }}" class="d-block w-100 py-2 ps-4">Gerer</a>
                 </div>
             </div>
         </div>
@@ -54,10 +54,10 @@
             </h2>
             <div id="collapse-3" class="accordionNav--item__collapse collapse" aria-labelledby="accordion-3" data-bs-parent="#admin-navbar">
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Ajouter</a>
+                    <a href="{{ path('admin.heat.new') }}" class="d-block w-100 py-2 ps-4">Ajouter</a>
                 </div>
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Gerer</a>
+                    <a href="{{ path('admin.heat.index') }}" class="d-block w-100 py-2 ps-4">Gerer</a>
                 </div>
             </div>
         </div>
@@ -74,26 +74,26 @@
             </h2>
             <div id="collapse-4" class="accordionNav--item__collapse collapse" aria-labelledby="accordion-4" data-bs-parent="#admin-navbar">
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Ajouter</a>
+                    <a href="{{ path('admin.type.new') }}" class="d-block w-100 py-2 ps-4">Ajouter</a>
                 </div>
                 <div class="collapse-box fs-6">
-                    <a href="#" class="d-block w-100 py-2 ps-4">Gerer</a>
+                    <a href="{{ path('admin.type.index') }}" class="d-block w-100 py-2 ps-4">Gerer</a>
                 </div>
             </div>
         </div>
         <div class="accordionNav--item">
-            <h2 class="accordionNav--item__header" id="accordion-4">
+            <a href='{{ path('home') }}' class="accordionNav--item__header" id="accordion-4">
                 <button class="px-3 py-3 fs-6 d-flex justify-content-between collapsed" type="button" >
                     <span>
                         <i class="fa-solid fa-eye text-info me-2"></i>
                         Mode user
                     </span>
                 </button>
-            </h2>
+            </a>
 
         </div>
     </div>
-    <a href="#" class="admin-logout-btn px-3 py-2 fs-6 text-center">
+    <a href="{{ path('logout') }}" class="admin-logout-btn px-3 py-2 fs-6 text-center">
         Déconnexion
     </a>
 </nav>

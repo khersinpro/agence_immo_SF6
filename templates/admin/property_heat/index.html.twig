@@ -1,31 +1,31 @@
 {% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}Admin - Gérer les options{% endblock %}
+{% block title %}Admin - Gérer les types de chauffage{% endblock %}
 
 {% block body %}
-    <h1>Gérer les options</h1>
+    <h1>Types de chauffages</h1>
 
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
-    
-    <table class="table table-striped">
+
+    <table class="table table-striped ">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>Titre</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for option in options %}
+        {% for property_heat in property_heats %}
             <tr>
-                <td>{{ option.name }}</td>
+                <td>{{ property_heat.name }}</td>
                 <td class="d-flex">
-                    <a href="{{ path('admin.option.edit', { id: option.id }) }}" class="btn btn-secondary me-2">Editer</a>
-                    <form method='post' action="{{ path('admin.option.delete', { id: option.id }) }}" 
+                    <a href="{{ path('admin.heat.edit', {'id': property_heat.id}) }}" class="btn btn-secondary me-2">Editer</a>
+                    <form method='post' action="{{ path('admin.heat.delete', { id: property_heat.id }) }}" 
                     onsubmit="return confirm('Voulez vous vraiment supprimer l\'article ?')">
                         <input type="hidden" name="_method" value='DELETE'>
-                        <input type="hidden" name="_token" value='{{ csrf_token('delete' ~ option.id) }}'>
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ property_heat.id) }}">
                         <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
                 </td>
@@ -34,7 +34,5 @@
         </tbody>
     </table>
 
-    <div class="text-end">
-        <a class='btn btn-primary' href="{{ path('admin.option.new') }}">Nouveau</a>
-    </div>
+    <a href="{{ path('admin.heat.new') }}" class="btn btn-primary float-end">Nouveau</a>
 {% endblock %}

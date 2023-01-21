@@ -1,37 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}PropertyType index{% endblock %}
+{% block title %}Admin - Gestion des types de bien{% endblock %}
 
 {% block body %}
-    <div class="container py-5">
-        <h1>PropertyType index</h1>
+    <h1>Types de bien</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for property_type in property_types %}
-                <tr>
-                    <td>{{ property_type.id }}</td>
-                    <td>{{ property_type.name }}</td>
-                    <td>
-                        <a href="{{ path('app_property_type_show', {'id': property_type.id}) }}">show</a>
-                        <a href="{{ path('app_property_type_edit', {'id': property_type.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for property_type in property_types %}
+            <tr>
+                <td>{{ property_type.name }}</td>
+                <td class="d-flex">
+                    <a href="{{ path('admin.type.edit', { id: property_type.id }) }}" class="btn btn-secondary me-2">Editer</a>
+                    <form method='post' action="{{ path('admin.type.delete', { id: property_type.id }) }}" 
+                    onsubmit="return confirm('Voulez vous vraiment supprimer l\'article ?')">
+                        <input type="hidden" name="_method" value='DELETE'>
+                        <input type="hidden" name="_token" value='{{ csrf_token('delete' ~ property_type.id) }}'>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <a href="{{ path('app_property_type_new') }}">Create new</a>
+    <div class="text-end">
+        <a class='btn btn-primary' href="{{ path('admin.type.new') }}">Nouveau</a>
     </div>
+
 {% endblock %}

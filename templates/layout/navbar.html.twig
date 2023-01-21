@@ -24,26 +24,12 @@
                             Acheter
                         </a>
                     </li>
-                {% if app.user %}
+                {% if app.user and is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
                         <a 
                             class="nav-link" 
                             aria-current="page" href="{{ path('admin.property.index') }}">
-                            Gérer les biens
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a 
-                            class="nav-link" 
-                            aria-current="page" href="{{ path('admin.option.index') }}">
-                            Gérer les options
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a 
-                            class="nav-link" 
-                            aria-current="page" href="{{ path('logout') }}">
-                            Déconnexion
+                            Administration
                         </a>
                     </li>
                 {% else %}
