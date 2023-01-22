@@ -45,16 +45,45 @@ class PropertyRepository extends ServiceEntityRepository
 
     public function findAllVisibleQuery(PropertySearch $search): Query
     {
-        $query = $this->queryBase();
+        $count = $this->createQueryBuilder('p')
+            ->where('p.sold = false')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+
+
+        $query = $this->queryBase()
+        ->leftJoin('p.propertyPictures', 'img', 'WITH', 'img = (SELECT MIN(i.id) FROM App\Entity\PropertyPicture i WHERE i.property = p)')
+        ->addSelect('img')
+        ->leftJoin('p.options', 'options')
+        ->addSelect('options')
+        ->orderBy("p.created_at", 'DESC')
+        ;
 
         if ($search->getMaxPrice()) {
             $query = $query->andWhere('p.price <= :maxprice')
                 ->setParameter('maxprice', $search->getMaxPrice());
         }
 
+        if ($search->getMinPrice()) {
+            $query = $query->andWhere('p.price >= :minprice')
+                ->setParameter('minprice', $search->getMaxPrice());
+        }
+
         if ($search->getMinSurface()) {
             $query = $query->andWhere('p.surface >= :minsurface')
             ->setParameter('minsurface', $search->getMinSurface());
+        }
+
+        if ($search->getMaxSurface()) {
+            $query = $query->andWhere('p.surface <= :maxsurface')
+            ->setParameter('maxsurface', $search->getMaxSurface());
+        }
+
+        if ($search->getTypeOfProperty()) {
+            $query = $query->andWhere('p.propertyType = :propertyType')
+            ->setParameter('propertyType', $search->getTypeOfProperty()->getId());
         }
 
         if ($search->getOptions()->count() > 0) {
@@ -74,12 +103,23 @@ class PropertyRepository extends ServiceEntityRepository
             ;
         }
 
-        return $query->getQuery();
+        $query =  $query->getQuery();
+
+        if(!$search->getisInitialized()) {
+            $query->setHint('knp_paginator.count', $count);
+        }
+
+        return $query;
     }
 
     public function findLatest(): array
     {
         return $this->queryBase()
+            ->leftJoin('p.propertyPictures', 'img', 'WITH', 'img = (SELECT MIN(i.id) FROM App\Entity\PropertyPicture i WHERE i.property = p)')
+            ->addSelect('img')
+            ->leftJoin('p.options', 'options')
+            ->addSelect('options')
+            ->orderBy("p.created_at", 'DESC')
             ->setMaxResults(8)
             ->getQuery()
             ->getResult();
@@ -88,8 +128,6 @@ class PropertyRepository extends ServiceEntityRepository
     private function queryBase(): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-        ->select('p', 'img')
-        ->leftJoin('p.propertyPictures', 'img', 'WITH', 'img = (SELECT MIN(i.id) FROM App\Entity\PropertyPicture i WHERE i.property = p)')
         ->where('p.sold = false');
     }
 //    /**

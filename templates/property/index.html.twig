@@ -60,7 +60,7 @@
                     </p>
                     <div class="row row-cols-1 mb-3">
                         <div class="col">
-                            <input type="text" name="" id="" class="form-control" placeholder="prix minimal">
+                            {{ form_row(form.typeOfProperty)}}
                         </div>
                     </div>
                     <p class="text-semi-dark d-flex align-items-center fw-bold fs-6">
@@ -68,8 +68,8 @@
                         Prix
                     </p>
                     <div class="row row-cols-1 row-cols-md-2 mb-4">
-                        <div class="col mb-3">
-                            <input type="text" name="" id="" class="form-control" placeholder="prix minimal">
+                        <div class="col">
+                            {{ form_row(form.minPrice)}}
                         </div>
                         <div class="col">
                             {{ form_row(form.maxPrice)}}
@@ -84,7 +84,7 @@
                             {{ form_row(form.minSurface)}}
                         </div>
                         <div class="col">
-                            <input type="text" name="" id="" class="form-control" placeholder="Surface maximal">
+                            {{ form_row(form.maxSurface)}}
                         </div>
                     </div>
                     <p class="text-semi-dark d-flex align-items-center fw-bold fs-6">
@@ -115,9 +115,16 @@
     <div class="container pb-3">
         <h1 class="mb-5 pb-3 border-bottom text-semi-dark">Nos biens immobiliers à vendre</h1>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-            {% for property in properties %}
-                {% include "property/_property.html.twig" %}
-            {% endfor %}
+            {% if properties|length > 0 %}
+                {% for property in properties %}
+                    {% include "property/_property.html.twig" %}
+                {% endfor %}
+            {% else %}
+                <div class="container d-flex justify-content-center aligne-items-center">
+                    <p class="fs-3 fw-bold text-semi-dark p-5">Oups, aucun bien ne correspond à votre recherche...</p>
+                </div>
+            {% endif %}
+            
         </div>
         {# display navigation #}
         <div class="navigation d-flex justify-content-center mt-5">

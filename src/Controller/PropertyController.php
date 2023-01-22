@@ -30,11 +30,12 @@ class PropertyController extends AbstractController
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
         $form->handleRequest($request);
-
+        
         $properties =  $paginator->paginate(
             $this->propertyRepository->findAllVisibleQuery($search),
             $request->query->getInt('page', 1),
-            12
+            12,
+            ['distinct' => false]
         );
 
         return $this->render('property/index.html.twig', [

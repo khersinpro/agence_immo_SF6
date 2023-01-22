@@ -23,7 +23,9 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('admin_autocomplete', './assets/admin_autocomplete.js')
     .addEntry('user_search_autocomplete', './assets/user_search_autocomplete.js')
-    .addEntry('show_ property_location', './assets/show_ property_location.js')
+    .addEntry('show_property_location', './assets/show_property_location.js')
+    .addEntry('admin', './assets/admin.js')
+
 
     
 

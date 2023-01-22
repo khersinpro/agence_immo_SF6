@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\PropertyOptions;
 use App\Entity\PropertySearch;
+use App\Entity\PropertyType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,6 +26,20 @@ class PropertySearchType extends AbstractType
                     'placeholder' => 'Surface minimale'
                 ]
             ])
+            ->add('maxSurface', IntegerType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Surface maximale'
+                ]
+            ])
+            ->add('minPrice', IntegerType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Budget minimal'
+                ]
+            ])
             ->add('maxPrice', IntegerType::class, [
                 'required' => false,
                 'label' => false,
@@ -32,8 +47,17 @@ class PropertySearchType extends AbstractType
                     'placeholder' => 'Budget maximal'
                 ]
             ])
+            ->add('typeOfProperty', EntityType::class, [
+                "required" => false,
+                'label' => false,
+                'placeholder' => 'Choisissez un type',
+                'class' => PropertyType::class,
+                'choice_label' => 'name',
+                'multiple' => false
+            ])
             ->add('options', EntityType::class, [
                 "required" => false,
+                'placeholder' => 'Choisissez des options',
                 'label' => false,
                 'class' => PropertyOptions::class,
                 'choice_label' => 'name',
@@ -47,7 +71,7 @@ class PropertySearchType extends AbstractType
                 'required' => false,
                 'multiple' => false,
                 'label' => false,
-                'placeholder' => 'Choisisez une distance',
+                'placeholder' => 'Choisissez une distance',
                 'choices' => [
                     '10km'=> 10,
                     '25km' => 25,
